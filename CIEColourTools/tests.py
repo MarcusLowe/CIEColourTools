@@ -1,3 +1,3 @@
 import ColourTools as CT
 
-CT.ASCIIXYtoArr("alizarinXY.txt")
+CT.ASCIIXYtoArr("CIEColourTools/alizarinXY.txt")
