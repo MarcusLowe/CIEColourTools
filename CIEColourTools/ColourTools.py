@@ -1,7 +1,8 @@
 import numpy as np
 
-def ASCIIXYtoArr(filename):
+def ASCIIXYtoArr(filename,scale):
     f = np.loadtxt(filename)
+    f[:,1] *= scale
     return f
 
 def spectrumToArr(filename,scale):
