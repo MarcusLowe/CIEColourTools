@@ -31,12 +31,12 @@ def D65_ill(wavelengths):
     #D65 = D65[360 <= D65[:,0]]
     return np.interp(wavelengths,D65[:,0],D65[:,1])
 
-def spectraToXYZ(spectra,K):
+def spectraToXYZ(spectra,K,shift=0):
     
     #wavelengths = spectra[:,0][np.where((360 <= spectra[:,0]) & (spectra[:,0] <= 830))]
     #spectrum = spectra[:,1][np.where((360 <= spectra[:,0]) & (spectra[:,0] <= 830))]
     wavelengths = np.linspace(360,830,1000)
-    spectrum = np.interp(wavelengths,spectra[:,0],spectra[:,1])
+    spectrum = np.interp(wavelengths-shift,spectra[:,0],spectra[:,1])
     
 
     maxLam = max(spectra[:,0])

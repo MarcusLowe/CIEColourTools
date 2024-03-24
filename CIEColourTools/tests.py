@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 #spectra = np.loadtxt("CIEColourTools/alazarinEXP.csv",delimiter=',')
 spectra = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
 #spectra[:,1] = 10**(spectra[:,1] - 4)
-spectra = CT.spectrumToArr("CIEColourTools/AQ-A_pbe0-631++g2d2p_esd-ahas.spectrum",5e-5)
+#spectra = CT.spectrumToArr("CIEColourTools/AQ-A_pbe0-631++g2d2p_esd-ahas.spectrum",5e-5)
 #print(spectra)
 
 #plt.plot(spectra[:,0],spectra[:,1])
 #plt.show()
 
-X,Y,Z = CT.spectraToXYZ(spectra,1)
+X,Y,Z = CT.spectraToXYZ(spectra,1,shift=0)
 L,a,b = CT.XYZtoLab(X,Y,Z)
 C,h = CT.abtoCh(a,b)
 R,G,B = CT.XYZtosRGB(X,Y,Z)
