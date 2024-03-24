@@ -54,6 +54,7 @@ def spectraToXYZ(spectra,K):
     plt.plot(wavelengths,y_b)
     plt.plot(wavelengths,z_b)
     plt.plot(wavelengths,spectrum)
+    plt.plot(wavelengths,I/100)
     
     
     
@@ -104,3 +105,21 @@ def abtoCh(a,b):
     h = np.arctan(b/a)
 
     return C,h
+
+def XYZtosRGB(X,Y,Z):
+    XYZ = np.array([X,Y,Z])
+    M = np.array([[3.2404542 ,-1.5371385,-0.4985314],
+                 [-0.9692660,1.8760108,0.0415560],
+                 [0.0556434 ,-0.2040259,1.0572252]])
+    rgb = M@XYZ
+    print(rgb)
+    RGB = rgb
+    for i,v in enumerate(rgb):
+        if v <= 0.0031308:
+            RGB[i] = 12.92*v
+        else:
+            RGB[i] = 1.055*(v**(1/2.4)) - 0.055
+
+    #print(rgb**(1/2.2))
+    print(RGB)
+    return RGB[0],RGB[1],RGB[2]
