@@ -3,7 +3,7 @@ import numpy as np
 def ASCIIXYtoArr(filename,scale):
     f = np.loadtxt(filename)
     f[:,1] *= scale
-    return f
+    return f[:,0], f[:,1]
 
 def spectrumToArr(filename,scale):
     f = np.loadtxt(filename)[:,0:2]
@@ -12,7 +12,7 @@ def spectrumToArr(filename,scale):
     f = f[350 <f[:,0] ]
     f[:,1] *= scale
     f = f[f[:, 0].argsort()]
-    return f
+    return f[:,0], f[:,1]
 
 def x_bar(wavelengths):
     colorFuncs = np.loadtxt("CIEColourTools/CIE_xyz_1931_2deg.csv",delimiter=',')
@@ -31,18 +31,18 @@ def D65_ill(wavelengths):
     #D65 = D65[360 <= D65[:,0]]
     return np.interp(wavelengths,D65[:,0],D65[:,1])
 
-def spectraToXYZ(spectra,K,shift=0):
+def spectraToXYZ(spectraWave,spectraInt,K,shift=0):
     
     #wavelengths = spectra[:,0][np.where((360 <= spectra[:,0]) & (spectra[:,0] <= 830))]
     #spectrum = spectra[:,1][np.where((360 <= spectra[:,0]) & (spectra[:,0] <= 830))]
     wavelengths = np.linspace(360,830,1000)
-    spectrum = np.interp(wavelengths-shift,spectra[:,0],spectra[:,1])
+    spectrum = np.interp(wavelengths-shift,spectraWave,spectraInt)
     
 
-    maxLam = max(spectra[:,0])
+    maxLam = max(spectraWave)
     spectrum[wavelengths > maxLam] = 0
     
-    spectrum = 10**(-spectrum)
+    spectrum = np.power(10,-spectrum)
     
     x_b = x_bar(wavelengths)
     y_b = y_bar(wavelengths)
@@ -66,7 +66,7 @@ def spectraToXYZ(spectra,K,shift=0):
     X = K*np.trapz(spectrum*x_b*I,wavelengths)/N
     Y = K*np.trapz(spectrum*y_b*I,wavelengths)/N
     Z = K*np.trapz(spectrum*z_b*I,wavelengths)/N
-
+    #print([X*N,Y*N,Z*N] )
     return X,Y,Z
 
 def XYZtoLab(X,Y,Z):
@@ -109,18 +109,39 @@ def abtoCh(a,b):
 
 def XYZtosRGB(X,Y,Z):
     XYZ = np.array([X,Y,Z])
-    M = np.array([[3.2404542 ,-1.5371385,-0.4985314],
-                 [-0.9692660,1.8760108,0.0415560],
-                 [0.0556434 ,-0.2040259,1.0572252]])
+    M = np.array([[3.2404542, -1.5371385, -0.4985314],
+                  [-0.9692660, 1.8760108,  0.0415560],
+                  [0.0556434, -0.2040259,  1.0572252]])
     rgb = M@XYZ
     print(rgb)
     RGB = rgb
-    for i,v in enumerate(rgb):
+    for i,v in enumerate(rgb): #Companding
         if v <= 0.0031308:
             RGB[i] = 12.92*v
         else:
             RGB[i] = 1.055*(v**(1/2.4)) - 0.055
 
     #print(rgb**(1/2.2))
-    print(RGB)
-    return RGB[0],RGB[1],RGB[2]
+    #print(RGB)
+    if np.any(RGB > 1): #normalise
+        RGB /= np.max(RGB)
+    
+    return RGB
+
+def XYZtoRGB(X,Y,Z):
+    xyz2rgb = np.array([[ 2.0413690, -0.5649464, -0.3446944],
+                        [-0.9692660,  1.8760108,  0.0415560],
+                        [ 0.0134474, -0.1183897,  1.0154096]])
+    XYZ = np.array([X,Y,Z])
+    rgb = xyz2rgb@XYZ
+    RGB = np.power(rgb,0.45454545454)
+    if np.any(RGB > 1): #normalise
+        RGB /= np.max(RGB)
+    
+    return RGB
+
+def rgb_to_hex(RGB):
+        """Convert from fractional rgb values to HTML-style hex string."""
+        
+        hex_rgb = (255 * RGB).astype(int)
+        return '#{:02x}{:02x}{:02x}'.format(*hex_rgb)
