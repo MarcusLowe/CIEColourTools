@@ -92,6 +92,7 @@ def spectraToXYZ(spectraWave,spectraInt,K,shift=0):
     y_b = y_bar(wavelengths)
     z_b = z_bar(wavelengths)
     I = D65_ill(wavelengths)
+    """
 
     import matplotlib.pyplot as plt
 
@@ -101,9 +102,8 @@ def spectraToXYZ(spectraWave,spectraInt,K,shift=0):
     plt.plot(wavelengths,spectrum)
     plt.plot(wavelengths,I/100)
     
-    
-    
     plt.show()
+    """
 
     N = np.trapz(I*y_b,wavelengths)
 
@@ -180,7 +180,6 @@ def XYZtosRGB(X,Y,Z):
                   [-0.9692660, 1.8760108,  0.0415560],
                   [0.0556434, -0.2040259,  1.0572252]])
     rgb = M@XYZ
-    print(rgb)
     RGB = rgb
     for i,v in enumerate(rgb): #Companding
         if v <= 0.0031308:

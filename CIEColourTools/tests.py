@@ -5,19 +5,19 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    #spectra = CT.ASCIIXYtoArr("CIEColourTools/Spectra/1AAQ L30 Shift 0.txt",10)
+    specW,specI = CT.ASCIIXYtoArr("CIEColourTools\Spectra\Disperse Red 60 Gaussian.txt",20)
     #spectra = np.loadtxt("CIEColourTools/alazarinEXP.csv",delimiter=',')
     #specW, specI = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
     #spectra[:,1] = 10**(spectra[:,1] - 4)
     #spectra = CT.spectrumToArr("CIEColourTools/AQ-A_pbe0-631++g2d2p_esd-ahas.spectrum",5e-5)
     #print(spectra)
 
-    expSpec = pd.read_csv("CIEColourTools/Spectra/AQC_Exp_Graph.csv")
+    #expSpec = pd.read_csv("CIEColourTools/Spectra/AQC_Exp_Graph.csv")
 
     #plt.plot(spectra[:,0],spectra[:,1])
     #plt.show()
-    specW = np.array(expSpec['x'])
-    specI = np.array(expSpec['y'])*1.5
+    #specW = np.array(expSpec['x'])
+    #specI = np.array(expSpec['y'])*1.5
     #print(specW,specI)
     X,Y,Z = CT.spectraToXYZ(specW,specI,1,shift=0)
     L,a,b = CT.XYZtoLab(X,Y,Z)
@@ -38,6 +38,32 @@ if __name__ == '__main__':
     print("shex ",shex)
     print("RGB ",RGB)
     print("hex ",hex)
+
+    print(CT.abtoCh(60.84 ,6.03))
+
+    fig, ax = plt.subplots()
+    for i in range(12):
+        X,Y,Z = CT.spectraToXYZ(specW,specI,1,shift=i*10)
+        sRGB = CT.XYZtosRGB(X,Y,Z)
+        shex = CT.rgb_to_hex(sRGB)
+        L,a,b = CT.XYZtoLab(X,Y,Z)
+        C,h = CT.abtoCh(a,b)
+        print(f"{i} : {h}")
+        x, y = i % 4, -(i // 4)
+        circle = plt.Circle(xy=(x, y*1.2), radius=0.4, fc=shex)
+        ax.add_patch(circle)
+
+
+    # Set the limits and background colour; remove the ticks
+    ax.set_xlim(-0.5, 3.5)
+    ax.set_ylim(-3.2, 0.5)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_facecolor('k')
+    # Make sure our circles are circular!
+    ax.set_aspect("equal")
+    plt.show()
+
     """
     import matplotlib.pyplot as plt
     plt.plot(spectra[:,0],x_b)
