@@ -156,14 +156,16 @@ def XYZtoLab(X,Y,Z):
 
     return L,a,b
 
-def abtoCh(a,b,units="rad"):
+def abtoCh(a,b,units="degrees"):
     """
     Converts a* and b* coordinates from the CIELab space to chroma (C*) and hue (h) coordinates
     -
     """
     C = np.sqrt(a**2 + b**2)
-    h = np.arctan(b/a)
-    if units != "rad":
+    h = np.arctan2(b,a)
+    if h < 0:
+        h += 2*np.pi
+    if units == "degrees":
         h = 180*h/(np.pi)
 
     return C,h
@@ -208,6 +210,7 @@ def XYZtoRGB(X,Y,Z):
                         [ 0.0134474, -0.1183897,  1.0154096]])
     XYZ = np.array([X,Y,Z])
     rgb = xyz2rgb@XYZ
+    print(rgb)
     RGB = np.power(rgb,0.45454545454)
     if np.any(RGB > 1): #normalise
         RGB /= np.max(RGB)
