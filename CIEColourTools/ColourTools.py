@@ -15,6 +15,7 @@ def ASCIIXYtoArr(filename,scale):
     """
     f = np.loadtxt(filename)
     f[:,1] *= scale
+    f = f[f[:, 0].argsort()]
     return f[:,0], f[:,1]
 
 def spectrumToArr(filename,scale):
@@ -92,8 +93,8 @@ def spectraToXYZ(spectraWave,spectraInt,K,shift=0):
     y_b = y_bar(wavelengths)
     z_b = z_bar(wavelengths)
     I = D65_ill(wavelengths)
+    
     """
-
     import matplotlib.pyplot as plt
 
     plt.plot(wavelengths,x_b)
@@ -104,6 +105,7 @@ def spectraToXYZ(spectraWave,spectraInt,K,shift=0):
     
     plt.show()
     """
+    
 
     N = np.trapz(I*y_b,wavelengths)
 
