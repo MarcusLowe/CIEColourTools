@@ -10,9 +10,10 @@ def calcError(L1,a1,b1,L2,a2,b2):
 
 if __name__ == '__main__':
 
-    file1 = "CIEColourTools\\Spectra\\solvent violet 13 gaussian 50.txt"
-    file2 = "C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\solvent violet 13 plot-data.csv"
-    scale = 5
+    name = "disperse red 60"
+    file1 = f"CIEColourTools\\Spectra\\{name} gaussian 50.txt"
+    file2 = f"CIEColourTools\\Spectra\\experimental\\{name} plot-data.csv"
+    scale = 2.5
 
     specW1,specI1 = CT.ASCIIXYtoArr(file1,scale)
     

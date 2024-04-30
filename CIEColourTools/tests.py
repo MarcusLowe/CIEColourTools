@@ -5,7 +5,7 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    #specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\reactive blue 19 gaussian 50.txt",2)
+    specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\solvent violet 13 gaussian 50.txt",2)
     #spectra = np.loadtxt("CIEColourTools/alazarinEXP.csv",delimiter=',')
     #specW, specI = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
     #spectra[:,1] = 10**(spectra[:,1] - 4)
@@ -13,9 +13,9 @@ if __name__ == '__main__':
     #print(spectra)
     filepath = "C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\solvent violet 13 plot-data.csv" #"C:\\Users\\axolo\\Downloads\\methyl yellow plot-data.csv"
     #"C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\reactive blue 19 plot-data.csv"
-    expSpec = pd.read_csv(filepath)
-    specW = np.array(expSpec['x'])
-    specI = np.array(expSpec[' y'])*2
+    #expSpec = pd.read_csv(filepath)
+    #specW = np.array(expSpec['x'])
+    #specI = np.array(expSpec[' y'])*2
     order = specW.argsort()
     specW = specW[order]
     specI = specI[order]

@@ -4,12 +4,13 @@ import ColourTools as CT
 import pandas as pd
 
 #spectra = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
-file1 = "CIEColourTools\\Spectra\\reactive blue 19 gaussian 50.txt"
-file2 = "C:\\Users\\Marcus\\Downloads\\reactive blue 19 plot-data.csv"#"C:\\Users\\axolo\\Downloads\\reactive blue 19 plot-data.csv"
-scale = 5
+name = "solvent violet 13"
+file1 = f"CIEColourTools\\Spectra\\{name} gaussian 50.txt"
+file2 = f"CIEColourTools\\Spectra\\experimental\\{name} plot-data.csv"
+scale = 1
 
 specW1,specI1 = CT.ASCIIXYtoArr(file1,scale)
-specW1 += 65
+specW1 += 0
 expSpec = pd.read_csv(file2)
 specW = np.array(expSpec['x'])
 specI = np.array(expSpec[' y'])*scale
@@ -17,8 +18,13 @@ order = specW.argsort()
 specW2 = specW[order]
 specI2 = specI[order]
 
-
-plt.plot(specW1,specI1,label="b3lyp")
-plt.plot(specW2,specI2,label="Exp")
-plt.legend()
+fig, ax = plt.subplots()
+ax.plot(specW1,specI1,label="B3LYP",linewidth=2,color='purple')
+ax.plot(specW2,specI2,label="Exp",linestyle='--',linewidth=2,color='r')
+ax.legend()
+ax.set_xlabel("Wavelength (nm)")
+ax.set_ylabel("Absorption Intensity")
+#ax.set_xlim(200, 830)
+#ax.set_ylim(0, 1)
+#ax.set_aspect("equal")
 plt.show()
