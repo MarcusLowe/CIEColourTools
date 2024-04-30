@@ -14,14 +14,20 @@ def calcError(spec1W,spec1I,spec2W,spec2I):
 
 if __name__ == '__main__':
 
-    specW1,specI1 = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\ethyl red gaussian 50.txt",10)
+    file1 = "CIEColourTools\\Spectra\\methyl yellow gaussian 50.txt"
+    file2 = "C:\\Users\\axolo\\Downloads\\methyl yellow plot-data.csv"
+    scale = 10
+
+    specW1,specI1 = CT.ASCIIXYtoArr(file1,scale)
     
-    expSpec = pd.read_csv("C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\ethyl_red.csv")
+    expSpec = pd.read_csv(file2)
     specW = np.array(expSpec['x'])
-    specI = np.array(expSpec[' y'])*10
+    specI = np.array(expSpec[' y'])*scale
     order = specW.argsort()
     specW2 = specW[order]
     specI2 = specI[order]
+
+
 
     print(f"Error = {round(calcError(specW1,specI1,specW2,specI2),1)}")
     

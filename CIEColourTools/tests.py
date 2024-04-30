@@ -5,17 +5,17 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\reactive blue 19 gaussian 50.txt",10)
+    #specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\14aminoAQ gaussian 50.txt",5)
     #spectra = np.loadtxt("CIEColourTools/alazarinEXP.csv",delimiter=',')
     #specW, specI = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
     #spectra[:,1] = 10**(spectra[:,1] - 4)
     #spectra = CT.spectrumToArr("CIEColourTools/AQ-A_pbe0-631++g2d2p_esd-ahas.spectrum",5e-5)
     #print(spectra)
-
-    #expSpec = pd.read_csv("CIEColourTools/Spectra/AQC_Exp_Graph.csv")
-    #expSpec = pd.read_csv("C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\reactive blue 19 plot-data.csv")
-    #specW = np.array(expSpec['x'])
-    #specI = np.array(expSpec[' y'])*5
+    filepath = "C:\\Users\\axolo\\Downloads\\methyl yellow plot-data.csv"
+    #"C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\reactive blue 19 plot-data.csv"
+    expSpec = pd.read_csv(filepath)
+    specW = np.array(expSpec['x'])
+    specI = np.array(expSpec[' y'])*10
     order = specW.argsort()
     specW = specW[order]
     specI = specI[order]
