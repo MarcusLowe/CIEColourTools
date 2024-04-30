@@ -4,8 +4,8 @@ import ColourTools as CT
 import pandas as pd
 
 #spectra = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
-file1 = "CIEColourTools\\Spectra\\reactive blue 19 gaussian 30.txt"
-file2 = "C:\\Users\\axolo\\Downloads\\reactive blue 19 plot-data.csv"
+file1 = "CIEColourTools\\Spectra\\reactive blue 19 gaussian 50.txt"
+file2 = "C:\\Users\\Marcus\\Downloads\\reactive blue 19 plot-data.csv"#"C:\\Users\\axolo\\Downloads\\reactive blue 19 plot-data.csv"
 scale = 5
 
 specW1,specI1 = CT.ASCIIXYtoArr(file1,scale)

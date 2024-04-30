@@ -5,24 +5,24 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    #specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\14aminoAQ gaussian 50.txt",5)
+    #specW,specI = CT.ASCIIXYtoArr("CIEColourTools\\Spectra\\reactive blue 19 gaussian 50.txt",2)
     #spectra = np.loadtxt("CIEColourTools/alazarinEXP.csv",delimiter=',')
     #specW, specI = CT.spectrumToArr("CIEColourTools/Spectra/AQ-A_pbe0-631++g2d2p_esd-ahas2.spectrum",1e-5)
     #spectra[:,1] = 10**(spectra[:,1] - 4)
     #spectra = CT.spectrumToArr("CIEColourTools/AQ-A_pbe0-631++g2d2p_esd-ahas.spectrum",5e-5)
     #print(spectra)
-    filepath = "C:\\Users\\axolo\\Downloads\\methyl yellow plot-data.csv"
+    filepath = "C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\solvent violet 13 plot-data.csv" #"C:\\Users\\axolo\\Downloads\\methyl yellow plot-data.csv"
     #"C:\\Marcus Stuff\\Quantum Dyes Project\\Experimental Spectra\\reactive blue 19 plot-data.csv"
     expSpec = pd.read_csv(filepath)
     specW = np.array(expSpec['x'])
-    specI = np.array(expSpec[' y'])*10
+    specI = np.array(expSpec[' y'])*2
     order = specW.argsort()
     specW = specW[order]
     specI = specI[order]
     #print(specW,specI)
     #plt.plot(spectra[:,0],spectra[:,1])
     #plt.show()
-    X,Y,Z = CT.spectraToXYZ(specW,specI,1,shift=0)
+    X,Y,Z = CT.spectraToXYZ(specW,specI,1,shift=50)
     L,a,b = CT.XYZtoLab(X,Y,Z)
     C,h = CT.abtoCh(a,b)
     sRGB = CT.XYZtosRGB(X,Y,Z)
